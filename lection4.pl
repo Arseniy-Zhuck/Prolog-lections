@@ -30,6 +30,6 @@ b_a_rp(A,N,Perm):-in_list(A,El),N1 is N-1,b_a_rp(A,N1,[El|Perm]).
 build_all_razm:-
 		read_str(A,N),read(K),b_a_r(A,[]).
 in_list_exlude([El|T],El,T).
-in_list_exlude([H|T],El,[H|T]):-in_list_exlude(T,El,T).
+in_list_exlude([H|T],El,T):-in_list_exlude(T,El,T).
 b_a_r([],Perm1):-write_str(Perm1),nl,!,fail.
 b_a_r(A,Perm):-in_list_exlude(A,El,A1),b_a_r(A1,[El|Perm]).
