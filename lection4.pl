@@ -34,10 +34,6 @@ in_list_exlude([H|T],El,[H|Tail]):-in_list_exlude(T,El,Tail).
 b_a_r([],Perm1):-write_str(Perm1),nl,!,fail.
 b_a_r(A,Perm):-in_list_exlude(A,El,A1),b_a_r(A1,[El|Perm]).
 
-/* Построим все возможные подмножества заданного множества */
-
-/* построим предикат, который проверит, является ли 
-последовательность подпоследовательностью для заданной */
 
 sub_posl([],_):-!.
 sub_posl(_,[]):-fail,!.
@@ -84,7 +80,7 @@ pr_ein:-Houses[_,_,_,_,_],
 		
 		in_list(Houses,[_,WHO1,water,_,_]),
 		in_list(Houses,[_,WHO2,_,zebra,_]),
-		
+		write(Houses),
 		write(WHO1),nl,write(WHO2).
 		
 		
