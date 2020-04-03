@@ -21,3 +21,4 @@ r_str(10,A,A,N,N):-!.
 r_str(X,A,B,N,K):-K1 is K+1,append(B,[X],B1),get0(X1),r_str(X1,A,B1,N,K1).
 
 pr_lec3_1:-read_str(A,N),write("vsego "),write(N),nl,w_list(A).
+

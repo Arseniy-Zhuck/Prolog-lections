@@ -27,11 +27,15 @@ b_a_rp(A,N,Perm):-in_list(A,El),N1 is N-1,b_a_rp(A,N1,[El|Perm]).
 
 build_all_razm:-
 		read_str(A,N),read(K),b_a_r(A,[]).
+
 in_list_exlude([El|T],El,T).
 in_list_exlude([H|T],El,[H|Tail]):-in_list_exlude(T,El,Tail).
+
 b_a_r([],Perm1):-write_str(Perm1),nl,!,fail.
 b_a_r(A,Perm):-in_list_exlude(A,El,A1),b_a_r(A1,[El|Perm]).
 
+in_list([El|_],El).
+in_list([_|T],El):-in_list(T,El).
 
 sub_posl([],_):-!.
 sub_posl(_,[]):-fail,!.
@@ -47,3 +51,9 @@ r_list(A,N,N,A):-!.
 r_list(A,N,K,B):-read(X),append(B,[X],B1),K1 is K+1,r_list(A,N,K1,B1).
 
 pr_subset:-read(N),r_list(A,N),sub_set(B,A),write(B),nl,fail.
+
+/*  sochet(Sub_set,K,Set) является ли Sub_set сочетанием по k элементов множества SET  */
+sochet([],0,_):-!.
+sochet([H|Sub_set],K,[H|Set]):-K1 is K-1,sochet(Sub_set,K1,Set).
+sochet(Sub_set,K,[H|Set]):-sochet(Sub_set,K,Set).
+
