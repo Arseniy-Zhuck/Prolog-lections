@@ -73,6 +73,27 @@ check_color(V,E,Col,[[Ver,Col]|Tail]):-
 
 make_way:-
 	get_graph_edges(V,E),write("Otkuda"),nl,read_str(X),name(I,X),
-	write("Kuda"),nl,read_str(X),name(S,X),make_way(V,E,I,S,[],
+	write("Kuda"),nl,read_str(Y),name(S,Y),make_way(V,E,I,S,Way),
+	write_way(Way).
+
+make_way(V,E,I,S,Way):-in_list_exlude(V,I,Tail),make_way(Tail,E,I,S,[I],Way).
+make_way(_,_,S,S,Way,Way). %показать ! здесь
+make_way(V,E,I,S,Cur_Way,Way):-	in_list_exlude(V,X,Tail),in_list1(E,[I,X]),
+								append1(Cur_Way,[X],C_W),make_way(Tail,E,X,S,C_W,Way).
+
+write_way([V]):-write(" "),write(V),write("."),!.
+write_way([V|Tail]):-write(" "),write(V),write(" -"),write_way(Tail).
+
+list_len([],0):-!.
+list_len([X|T],L):-list_len(T,L1),L is L1+1.
+
+short_way:-get_graph_edges(V,E),write("Otkuda"),nl,read_str(X),name(I,X),
+	write("Kuda"),nl,read_str(Y),name(S,Y),list_len(V,Len),
+	not(short_way(V,E,I,S,Way,Len)),write_way(Way).
+
+short_way(V,E,I,S,Way,Len):-
+	make_way(V,E,I,S,Cur_Way),list_len(Cur_Way,L),L<Len,Way = Cur_Way,fail.
+
+
 
 
