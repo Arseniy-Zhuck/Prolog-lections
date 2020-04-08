@@ -25,11 +25,11 @@ in_list([El|_],El).
 in_list([_|T],El):-in_list(T,El).
 
 append1([],X,X):-!.
-append1([H|T],X,[H |Z]):-append1(T,X,Z).							
+append1([H|T],X,[H |Z]):-append1(T,X,Z).
 
 check_vertex([V1|_],V1):-!.
 check_vertex([_|T],V1):-check_vertex(T,V1).
-							
+
 get_edge(V,[V1,V2]):-write("Edge"),nl,read_str(X),name(V1,X),check_vertex(V,V1),
 						read_str(Y),name(V2,Y),check_vertex(V,V2).
 
@@ -97,7 +97,7 @@ make_way:-
 	write_way(Way).
 
 make_way(V,E,I,S,Way):-in_list_exlude(V,I,Tail),make_way(Tail,E,I,S,[I],Way).
-make_way(_,_,S,S,Way,Way). %показать ! здесь
+make_way(_,_,S,S,Way,Way):-!.
 make_way(V,E,I,S,Cur_Way,Way):-	in_list_exlude(V,X,Tail),in_list1(E,[I,X]),
 								append1(Cur_Way,[X],C_W),make_way(Tail,E,X,S,C_W,Way).
 
@@ -109,10 +109,13 @@ list_len([X|T],L):-list_len(T,L1),L is L1+1.
 
 short_way:-get_graph_edges(V,E),write("Otkuda"),nl,read_str(X),name(I,X),
 	write("Kuda"),nl,read_str(Y),name(S,Y),list_len(V,Len),
-	not(short_way(V,E,I,S,Way,Len)),write_way(Way).
+	short_way(V,E,I,S,Way,Len+1),write_way(Way).
 
-short_way(V,E,I,S,Way,Len):-
-	make_way(V,E,I,S,Cur_Way),list_len(Cur_Way,L),L<Len,Way = Cur_Way,fail.
+short_way(V,E,I,S,Way,Len):-short_way(V,E,I,S,Way,_,Len).
+short_way(V,E,I,S,Way,_,Len):-
+	make_way(V,E,I,S,Cur_Way1),list_len(Cur_Way1,L),L<Len,!,short_way(V,E,I,S,Way,Cur_Way1,L).
+short_way(_,_,_,_,Way,Way,_).
+
 
 
 
