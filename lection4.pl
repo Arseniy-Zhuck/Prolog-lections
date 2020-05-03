@@ -50,10 +50,9 @@ r_list(A,N):-r_list(A,N,0,[]).
 r_list(A,N,N,A):-!.
 r_list(A,N,K,B):-read(X),append(B,[X],B1),K1 is K+1,r_list(A,N,K1,B1).
 
-pr_subset:-read(N),r_list(A,N),sub_set(B,A),write(B),nl,fail.
-
+pr_subset:-read(N),r_list(A,N),read(V),sub_set(B,A),sum_list(B,V).
+sum_list([],0):-!.
+sum_list([Head|Tail],S):-sum_list(Tail,S1),S is S1+Head.
 /*  sochet(Sub_set,K,Set) является ли Sub_set сочетанием по k элементов множества SET  */
-sochet([],0,_):-!.
-sochet([H|Sub_set],K,[H|Set]):-K1 is K-1,sochet(Sub_set,K1,Set).
-sochet(Sub_set,K,[H|Set]):-sochet(Sub_set,K,Set).
+
 
